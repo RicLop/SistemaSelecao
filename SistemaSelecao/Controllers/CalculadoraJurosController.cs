@@ -30,7 +30,7 @@ namespace SistemaSelecao.Controllers
         [Route("showmethecode")]
         public string ShowMeTheCode()
         {
-            return "GIT";
+            return "https://github.com/RicLop/SistemaSelecao";
         }
     }
 }
