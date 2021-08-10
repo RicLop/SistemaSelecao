@@ -7,15 +7,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using SistemaSelecao.Interfaces;
-using SistemaSelecao.Services;
+using SistemaSelecao.TaxaJuros.Interfaces;
+using SistemaSelecao.TaxaJuros.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
-namespace SistemaSelecao
+namespace SistemaSelecao.TaxaJuros
 {
     public class Startup
     {
@@ -31,12 +30,10 @@ namespace SistemaSelecao
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SistemaSelecao.CalculadoraJuros", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TaxaJuros", Version = "v1" });
             });
 
-            services.AddHttpClient();
-
-            services.AddScoped<ICalculadoraJurosService, CalculadoraJurosService>();
+            services.AddScoped<ITaxaJurosService, TaxaJurosService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -45,7 +42,7 @@ namespace SistemaSelecao
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/calculadorajuros/v1/swagger.json", "SistemaSelecao.CalculadoraJuros v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("v1/swagger.json", "TaxaJuros v1"));
             }
 
             app.UseHttpsRedirection();

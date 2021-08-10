@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SistemaSelecao.Interfaces;
+using SistemaSelecao.CalculadoraJuros.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace SistemaSelecao.Controllers
+namespace SistemaSelecao.CalculadoraJuros.Controllers
 {
     [ApiController]
     public class CalculadoraJurosController : ControllerBase
@@ -21,16 +21,12 @@ namespace SistemaSelecao.Controllers
 
         [HttpGet()]
         [Route("calculajuros")]
-        public decimal Get(decimal valorInicial, int tempoMeses)
-        {
-            return _calculadoraJurosService.Calcular(valorInicial, tempoMeses);
-        }
+        public async Task<decimal> Get(decimal valorInicial, int tempoMeses) =>
+            await _calculadoraJurosService.CalcularAsync(valorInicial, tempoMeses);
 
         [HttpGet()]
         [Route("showmethecode")]
-        public string ShowMeTheCode()
-        {
-            return "https://github.com/RicLop/SistemaSelecao";
-        }
+        public string ShowMeTheCode() =>
+            "https://github.com/RicLop/SistemaSelecao";
     }
 }

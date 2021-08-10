@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
-using SistemaSelecao.Interfaces;
+using SistemaSelecao.TaxaJuros.Interfaces;
 
-namespace SistemaSelecao.Services
+namespace SistemaSelecao.TaxaJuros.Services
 {
     public class TaxaJurosService : ITaxaJurosService
     {

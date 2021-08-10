@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SistemaSelecao.Interfaces
+namespace SistemaSelecao.TaxaJuros.Interfaces
 {
     public interface ITaxaJurosService
     {

@@ -1,59 +1,30 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using SistemaSelecao.Interfaces;
-using SistemaSelecao.Services;
+using SistemaSelecao.CalculadoraJuros.Services;
+using SistemaSelecao.CalculadoraJuros.Interfaces;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace SistemaSelecao.Tests
 {
-    [TestClass]
     public class CalculadoraJurosServiceTest
     {
-        [TestMethod]
-        public void Calcular_DadoCorretos_Sucesso()
+        [Theory]
+        [InlineData(100, 5, 105.10)]
+        [InlineData(50, 10, 55.23)]
+        [InlineData(120, 0, 0)]
+        [InlineData(0, 5, 0)]
+        public async Task CalcularAsync_DeveCalcularAsync(int valorIncial, int tempoMeses, decimal esperado)
         {
-            var valorIncial = 100;
-            var tempoMeses = 5;
+            var httpClientFactory = new Mock<ITaxaJurosService>();
+            httpClientFactory.Setup(x => x.ObterTaxaJuros()).Returns(Task.FromResult(0.01M));
 
-            var taxaJurosService = new Mock<ITaxaJurosService>();
-            taxaJurosService.Setup(x => x.ObterTaxaJuros()).Returns(0.01M);
+            var calculadora = new CalculadoraJurosService(httpClientFactory.Object);
 
-            var calculadora = new CalculadoraJurosService(taxaJurosService.Object);
+            var valorFinal = await calculadora.CalcularAsync(valorIncial, tempoMeses);
 
-            var valorFinal = calculadora.Calcular(valorIncial, tempoMeses);
-
-            Assert.AreEqual(valorFinal, 105.10M);
-        }
-
-        [TestMethod]
-        public void Calcular_FaltandoMês_Falha()
-        {
-            var valorIncial = 100;
-            var tempoMeses = 0;
-
-            var taxaJurosService = new Mock<ITaxaJurosService>();
-            taxaJurosService.Setup(x => x.ObterTaxaJuros()).Returns(0.01M);
-
-            var calculadora = new CalculadoraJurosService(taxaJurosService.Object);
-
-            var valorFinal = calculadora.Calcular(valorIncial, tempoMeses);
-
-            Assert.AreEqual(valorFinal, 0);
-        }
-
-        [TestMethod]
-        public void Calcular_FaltandoValorInicial_Falha()
-        {
-            var valorIncial = 0;
-            var tempoMeses = 5;
-
-            var taxaJurosService = new Mock<ITaxaJurosService>();
-            taxaJurosService.Setup(x => x.ObterTaxaJuros()).Returns(0.01M);
-
-            var calculadora = new CalculadoraJurosService(taxaJurosService.Object);
-
-            var valorFinal = calculadora.Calcular(valorIncial, tempoMeses);
-
-            Assert.AreEqual(valorFinal, 0);
+            Assert.Equal(valorFinal, esperado);
         }
     }
 }

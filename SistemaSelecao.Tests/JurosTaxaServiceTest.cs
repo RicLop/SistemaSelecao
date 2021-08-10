@@ -1,8 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using SistemaSelecao.Interfaces;
-using SistemaSelecao.Services;
+using SistemaSelecao.TaxaJuros.Services;
 using System.Collections.Generic;
 
 namespace SistemaSelecao.Tests

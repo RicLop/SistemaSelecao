@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SistemaSelecao.Interfaces
+namespace SistemaSelecao.CalculadoraJuros.Interfaces
 {
     public interface ICalculadoraJurosService
     {
-        public decimal Calcular(decimal valorInicial, int tempoMeses);
+        public Task<decimal> CalcularAsync(decimal valorInicial, int tempoMeses);
     }
 }

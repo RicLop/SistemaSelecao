@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using SistemaSelecao.Interfaces;
+using SistemaSelecao.TaxaJuros.Interfaces;
 using System.Globalization;
 
-namespace SistemaSelecao.Controllers
+namespace SistemaSelecao.TaxaJuros.Controllers
 {
     [ApiController]
     public class TaxaJurosController : ControllerBase
@@ -18,9 +18,7 @@ namespace SistemaSelecao.Controllers
 
         [HttpGet]
         [Route("taxajuros")]
-        public decimal Get()
-        {
-            return _taxaJurosService.ObterTaxaJuros();
-        }        
+        public decimal Get() => 
+            _taxaJurosService.ObterTaxaJuros();        
     }
 }

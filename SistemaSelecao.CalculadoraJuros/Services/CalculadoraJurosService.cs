@@ -1,7 +1,9 @@
-﻿using SistemaSelecao.Interfaces;
+﻿using SistemaSelecao.CalculadoraJuros.Interfaces;
 using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
-namespace SistemaSelecao.Services
+namespace SistemaSelecao.CalculadoraJuros.Services
 {
     public class CalculadoraJurosService : ICalculadoraJurosService
     {
@@ -12,12 +14,15 @@ namespace SistemaSelecao.Services
             _taxaJurosService = taxaJurosService;
         }
 
-        public decimal Calcular(decimal valorInicial, int tempoMeses)
+        public async Task<decimal> CalcularAsync(decimal valorInicial, int tempoMeses)
         {
             if (valorInicial == 0 || tempoMeses == 0)
                 return 0;
 
-            var taxa = _taxaJurosService.ObterTaxaJuros();
+            var taxa = await _taxaJurosService.ObterTaxaJuros();
+
+            if (taxa == 0)
+                return 0;
 
             var calculoSobreTaxa = Math.Pow((double)(1 + taxa), tempoMeses);
 
